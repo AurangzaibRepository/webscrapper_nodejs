@@ -5,7 +5,7 @@ exports.extractData = () => {
   const promise = new Promise((resolve, reject) => {
     axios(process.env.GEONEWS_URL)
       .then((response) => {
-        const contents = parser.parse(response);
+        const contents = parser.parse(response.data);
         resolve(contents);
       })
       .catch((error) => {
