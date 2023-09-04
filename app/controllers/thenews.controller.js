@@ -17,3 +17,20 @@ exports.get = (req, res) => {
       ));
     });
 };
+
+exports.getByCategory = (req, res) => {
+  thenewsService.extractCategoryData(req.params.category)
+    .then((response) => {
+      res.send(requestHelper.getResponse(
+        true,
+        null,
+        response,
+      ));
+    })
+    .catch((error) => {
+      res.send(requestHelper.getResponse(
+        false,
+        error,
+      ));
+    });
+};
