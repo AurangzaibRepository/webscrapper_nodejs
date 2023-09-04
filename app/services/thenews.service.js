@@ -1,5 +1,5 @@
 const axios = require("axios");
-const parser = require("../parsers/arynews.parser");
+const parser = require("../parsers/thenews.parser");
 
 exports.extractData = () => {
   const promise = new Promise((resolve, reject) => {
