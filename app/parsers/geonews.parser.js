@@ -1,10 +1,10 @@
 const cheerio = require("cheerio");
 
-exports.parse = (data) => {
+function parseContents(selector, data) {
   const $ = cheerio.load(data);
   const contents = [];
 
-  $(".m_c_left ul li", data).each((i, element) => {
+  $(selector, data).each((i, element) => {
     const headerElement = $(element).find(".m_pic a");
 
     contents.push({
@@ -13,6 +13,15 @@ exports.parse = (data) => {
       image: headerElement.find("img").attr("data-src"),
     });
   });
+
+  return contents;
+}
+
+exports.parse = (data) => {
+  const contents = [];
+
+  contents.push(parseContents(".m_c_left ul li", data));
+  contents.push(parseContents(".m_c_right ul li", data));
 
   return contents;
 };
