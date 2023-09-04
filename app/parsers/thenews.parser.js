@@ -22,9 +22,11 @@ function parseMagazineSection(data) {
   const contents = [];
 
   $(".home_mag_list", data).each((i, element) => {
+    const headerElement = $(element).find("a");
+
     contents.push({
-      title: $(element).find("a").attr("title").trim(),
-      url: $(element).find("a").attr("href"),
+      title: headerElement.attr("title").trim(),
+      url: headerElement.attr("href"),
       image: $(element).find("img").attr("data-src"),
     });
   });
@@ -37,9 +39,11 @@ function parseMoreNews(data) {
   const contents = [];
 
   $(".laodMoreNews ul li", data).each((i, element) => {
+    const headerElement = $(element).find("a");
+
     contents.push({
-      title: $(element).find("a").attr("title").trim(),
-      url: $(element).find("a").attr("href"),
+      title: headerElement.attr("title").trim(),
+      url: headerElement.find("a").attr("href"),
     });
   });
 
@@ -54,6 +58,23 @@ exports.parse = (data) => {
     magazines: parseMagazineSection(data),
     moreNews: parseMoreNews(data),
   };
+
+  return contents;
+};
+
+exports.parseByCategory = (data) => {
+  const $ = cheerio.load(data);
+  const contents = [];
+
+  $(".writter-list-item ul li", data).each((i, element) => {
+    const imageElement = $(element).find(".latest-page-img img");
+
+    contents.push({
+      title: imageElement.attr("title").trim(),
+      url: $(element).find("a").attr("href"),
+      image: imageElement.attr("src"),
+    });
+  });
 
   return contents;
 };

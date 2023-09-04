@@ -17,7 +17,7 @@ exports.extractData = () => {
 };
 
 exports.extractCategoryData = (category) => {
-  const url = `${process.env.THENEWS_URL}/category/${category}`;
+  const url = `${process.env.THENEWS_URL}/latest/category/${category}`;
 
   const promise = new Promise((resolve, reject) => {
     axios(url)
