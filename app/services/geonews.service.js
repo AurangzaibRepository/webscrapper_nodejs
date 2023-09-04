@@ -1,4 +1,4 @@
-const axios = require("Axios");
+const axios = require("axios");
 const parser = require("../parsers/geonews.parser");
 
 exports.extractData = () => {
