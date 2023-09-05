@@ -15,3 +15,20 @@ exports.extractData = () => {
 
   return promise;
 };
+
+exports.extractCategoryData = (category) => {
+  const url = `${process.env.DAWNNEWS_URL}/${category}`;
+
+  const promise = new Promise((resolve, reject) => {
+    axios(url)
+      .then((response) => {
+        const contents = parser.parseByCategory(response.data);
+        resolve(contents);
+      })
+      .catch((error) => {
+        reject(error.message);
+      });
+  });
+
+  return promise;
+};
