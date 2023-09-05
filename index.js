@@ -8,6 +8,7 @@ require("./app/routes/arynews.route")(app);
 require("./app/routes/geonews.route")(app);
 require("./app/routes/thenews.route")(app);
 require("./app/routes/dawnnews.route")(app);
+require("./app/routes/bbcnews.route")(app);
 
 const PORT = process.env.port || 8000;
 app.listen(PORT, () => {
