@@ -3,6 +3,7 @@ const dawnnews = require("../controllers/dawnnews.controller");
 
 module.exports = (app) => {
   router.get("/", dawnnews.get);
+  router.get("/:category", dawnnews.getByCategory);
 
   app.use("/api/dawnnews", router);
 };
