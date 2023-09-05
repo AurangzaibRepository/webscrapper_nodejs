@@ -19,7 +19,7 @@ exports.get = (req, res) => {
 };
 
 exports.getByCategory = (req, res) => {
-  dawnnewsService.extractCategoryData(req.params.category)
+  dawnnewsService.extractData(req.params.category)
     .then((response) => {
       res.send(requestHelper.getResponse(
         true,
