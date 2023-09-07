@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const bbcnews = require("../controllers/bccnews.controller");
+const bbcnews = require("../controllers/bbcnews.controller");
 
 module.exports = (app) => {
   router.get("/", bbcnews.get);
