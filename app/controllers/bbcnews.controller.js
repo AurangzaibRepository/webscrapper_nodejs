@@ -19,7 +19,7 @@ exports.get = (req, res) => {
 };
 
 exports.getByCategory = (req, res) => {
-  bbcnewsService.extractCategoryData()
+  bbcnewsService.extractCategoryData(req.params.category)
     .then((response) => {
       res.send(requestHelper.getResponse(
         true,
