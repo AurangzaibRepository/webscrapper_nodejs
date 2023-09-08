@@ -27,10 +27,17 @@ function parseContents(rootElement, data) {
 
 exports.parse = (data) => {
   const $ = cheerio.load(data);
-  let contents = parseContents($(".focus-story"), data);
+  const contents = {
+    news: parseContents($(".focus-story"), data),
+    videoStories: parseContents("#in-story .col-md-7 .thumb--video", data),
+  };
 
   $(".more-story .story-set-group .in-sec-story", data).each((index, element) => {
-    contents = contents.concat(parseContents(element, data));
+    contents.news = contents.news.concat(parseContents(element, data));
+  });
+
+  $("#in-story .col-md-5 .thumb--list", data).each((index, element) => {
+    contents.videoStories = contents.videoStories.concat(parseContents(element, data));
   });
 
   return contents;
