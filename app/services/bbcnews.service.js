@@ -21,7 +21,7 @@ exports.extractCategoryData = (category) => {
   const promise = new Promise((resolve, reject) => {
     axios(`${process.env.BBCNEWS_URL}/news/${category}`)
       .then((response) => {
-        const contents = categoryParser.parse(response);
+        const contents = categoryParser.parse(response.data);
         resolve(contents);
       })
       .catch((error) => {
