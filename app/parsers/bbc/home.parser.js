@@ -26,7 +26,7 @@ function parseSectionContents(data, rootElement, section = null) {
       url: parseUrl(headerElement.attr("href"), section),
       tagInfo: createTags(
         $(element).find(".media__tag").text().trim(),
-        $(element).find(".media__tag").attr("href")
+        $(element).find(".media__tag").attr("href"),
       ),
     });
   });
