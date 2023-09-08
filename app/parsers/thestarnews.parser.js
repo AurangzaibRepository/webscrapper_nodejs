@@ -25,11 +25,29 @@ function parseContents(rootElement, data) {
   return contents;
 }
 
+function parseStories(data) {
+  const $ = cheerio.load(data);
+  const contents = [];
+
+  $(".more-story .col-sm-3", data).each((index, element) => {
+    const headerElement = $(element).find(".f25 a");
+
+    contents.push({
+      title: headerElement.text().trim(),
+      summary: $(element).find(".text-overflow p").text().trim(),
+      url: headerElement.attr("href"),
+    });
+  });
+
+  return contents;
+}
+
 exports.parse = (data) => {
   const $ = cheerio.load(data);
   const contents = {
     news: parseContents($(".focus-story"), data),
     videoStories: parseContents("#in-story .col-md-7 .thumb--video", data),
+    stories: parseStories(data),
   };
 
   $(".more-story .story-set-group .in-sec-story", data).each((index, element) => {
