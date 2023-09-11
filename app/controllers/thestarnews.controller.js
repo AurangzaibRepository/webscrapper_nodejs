@@ -2,7 +2,7 @@ const thestarnewsService = require("../services/thestarnews.service");
 const requestHelper = require("../utils/request.helper");
 
 exports.get = (req, res) => {
-  thestarnewsService.extractData()
+  thestarnewsService.extractData(req.params.category)
     .then((response) => {
       res.send(requestHelper.getResponse(
         true,
