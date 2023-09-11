@@ -1,11 +1,20 @@
 const axios = require("axios");
 const parser = require("../parsers/thestarnews.parser");
 
-exports.extractData = () => {
+exports.extractData = (category) => {
+  let url = `${process.env.THESTARNEWS_URL}`;
+
+  if (category) {
+    url += `/${category}`;
+  }
+
   const promise = new Promise((resolve, reject) => {
-    axios(process.env.THESTARNEWS_URL)
+    axios(url)
       .then((response) => {
-        const contents = parser.parse(response.data);
+        const contents = (category
+          ? parser.parseByCategory(response.data)
+          : parser.parse(response.data)
+        );
         resolve(contents);
       })
       .catch((error) => {
