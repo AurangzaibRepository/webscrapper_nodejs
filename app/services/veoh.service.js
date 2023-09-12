@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const puppeteer = require("puppeteer");
-const parser = require("../parsers/veoh/home.parser");
+const parser = require("../parsers/veoh.parser");
 
 exports.extractData = async (keyword) => {
   let url = process.env.VEOH_URL;
@@ -12,10 +12,7 @@ exports.extractData = async (keyword) => {
   const page = await browser.newPage();
   await page.goto(url);
 
-  const contents = (keyword == null
-    ? await parser.parse(page)
-    : await parser.parseByCategory(page)
-  );
+  const contents = await parser.parse(page);
 
   await browser.close();
   return Promise.resolve(contents);
