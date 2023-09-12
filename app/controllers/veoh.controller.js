@@ -2,7 +2,7 @@ const veohService = require("../services/veoh.service");
 const requestHelper = require("../utils/request.helper");
 
 exports.get = (req, res) => {
-  veohService.extractData()
+  veohService.extractData(req.params.keyword)
     .then((response) => {
       res.send(requestHelper.getResponse(
         true,
