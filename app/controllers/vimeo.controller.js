@@ -1,4 +1,4 @@
-const youtubeService = require("../services/youtube.service");
+const youtubeService = require("../services/vimeo.service");
 const requestHelper = require("../utils/request.helper");
 
 exports.get = (req, res) => {
