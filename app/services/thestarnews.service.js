@@ -1,20 +1,14 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const axios = require("axios");
-const parser = require("../parsers/thestarnews.parser");
+const puppeteer = require("puppeteer");
+const parser = require("../parsers/thestarnews/home.parser");
+const categoryParser = require("../parsers/thestarnews/category.parser");
 
-exports.extractData = (category) => {
-  let url = `${process.env.THESTARNEWS_URL}`;
-
-  if (category) {
-    url += `/${category}`;
-  }
-
+exports.extractData = () => {
   const promise = new Promise((resolve, reject) => {
-    axios(url)
+    axios(process.env.THESTARNEWS_URL)
       .then((response) => {
-        const contents = (category
-          ? parser.parseByCategory(response.data)
-          : parser.parse(response.data)
-        );
+        const contents = parser.parse(response.data);
         resolve(contents);
       })
       .catch((error) => {
@@ -23,4 +17,20 @@ exports.extractData = (category) => {
   });
 
   return promise;
+};
+
+exports.extractCategoryData = async (category) => {
+  try {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(`${process.env.THESTARNEWS_URL}/${category}`, {
+      waitUntil: "domcontentloaded",
+    });
+
+    const contents = await categoryParser.parse(page);
+    await browser.close();
+    return Promise.resolve(contents);
+  } catch (error) {
+    return Promise.reject(error.message);
+  }
 };
