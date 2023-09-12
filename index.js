@@ -11,7 +11,8 @@ require("./app/routes/dawnnews.route")(app);
 require("./app/routes/bbcnews.route")(app);
 require("./app/routes/thestarnews.route")(app);
 require("./app/routes/vimeo.route")(app);
-require("./app/routes/veoh.route.js")(app);
+require("./app/routes/veoh.route")(app);
+require("./app/routes/dtube.route")(app);
 
 const PORT = process.env.port || 8000;
 app.listen(PORT, () => {
