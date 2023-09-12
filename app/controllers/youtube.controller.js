@@ -2,7 +2,7 @@ const youtubeService = require("../services/youtube.service");
 const requestHelper = require("../utils/request.helper");
 
 exports.get = (req, res) => {
-  youtubeService.extractData(req.params.category)
+  youtubeService.extractData(req.params.keyword)
     .then((response) => {
       res.send(requestHelper.getResponse(
         true,
