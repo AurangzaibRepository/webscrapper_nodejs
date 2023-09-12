@@ -54,10 +54,32 @@ exports.parse = async (page) => {
       return data;
     }
 
+    function getOtherNews() {
+      const data = [];
+      const items = document.querySelectorAll("#story-recom-list .desc");
+
+      items.forEach((item) => {
+        const headerElement = item.querySelector("p a");
+
+        data.push({
+          title: headerElement.innerText,
+          url: headerElement.getAttribute("href"),
+          image: item.querySelector(".img-sticker img").getAttribute("src"),
+          tagInfo: {
+            name: item.querySelector(".kicker").innerText,
+            url: item.querySelector(".kicker").getAttribute("href"),
+          }
+        });
+      });
+
+      return data;
+    }
+
     const data = {
       sideNews: getSideNews(),
       news: getNews(),
       justInNews: getJustInNews(),
+      others: getOtherNews(),
     };
 
     return data;
