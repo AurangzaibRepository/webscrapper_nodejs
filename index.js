@@ -10,7 +10,7 @@ require("./app/routes/thenews.route")(app);
 require("./app/routes/dawnnews.route")(app);
 require("./app/routes/bbcnews.route")(app);
 require("./app/routes/thestarnews.route")(app);
-require("./app/routes/youtube.route.")(app);
+require("./app/routes/youtube.route")(app);
 
 const PORT = process.env.port || 8000;
 app.listen(PORT, () => {
