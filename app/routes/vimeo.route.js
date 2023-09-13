@@ -1,8 +1,8 @@
 const router = require("express").Router();
-const youtube = require("../controllers/vimeo.controller");
+const vimeo = require("../controllers/vimeo.controller");
 
 module.exports = (app) => {
-  router.get("/:keyword", youtube.get);
+  router.get("/:keyword", vimeo.get);
 
-  app.use("/api/youtube", router);
+  app.use("/api/vimeo", router);
 };
