@@ -2,7 +2,7 @@ const dtubeService = require("../services/dtube.service");
 const requestHelper = require("../utils/request.helper");
 
 exports.get = (req, res) => {
-  dtubeService.extractData
+  dtubeService.extractData()
     .then((response) => {
       res.send(requestHelper.getResponse(
         true,
