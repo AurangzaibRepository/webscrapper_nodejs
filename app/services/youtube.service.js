@@ -12,7 +12,7 @@ exports.extractData = async (keyword) => {
 
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
-    await page.goto(process.env.YOUTUBE_URL, {
+    await page.goto(url, {
       waitUntil: "networkidle0",
       timeout: 0,
     });
