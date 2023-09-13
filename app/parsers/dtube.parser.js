@@ -1,9 +1,11 @@
 exports.parse = async (page) => {
-  const contents = await page.evaluate(() => {
+  const { DTUBE_URL } = process.env;
+
+  const contents = await page.evaluate((baseUrl) => {
     function getTagInformation(name, url) {
       return {
         name,
-        url: `${process.env.DTUBE_URL}/${url}`,
+        url: `${baseUrl}/${url}`,
       };
     }
 
@@ -18,7 +20,7 @@ exports.parse = async (page) => {
 
         data.push({
           title: headerElement.getAttribute("title"),
-          url: `${process.env.DTUBE_URL}/${headerElement.getAttribute("href")}`,
+          url: `${baseUrl}/${headerElement.getAttribute("href")}`,
           image: headerElement.querySelector("#snapimg").getAttribute("src"),
           tagInfo: getTagInformation(
             item.querySelector(".videosnapauthor a .customlink").innerText,
@@ -29,7 +31,7 @@ exports.parse = async (page) => {
     });
 
     return data;
-  });
+  }, DTUBE_URL);
 
   return contents;
 };
