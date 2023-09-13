@@ -1,8 +1,15 @@
 const puppeteer = require("puppeteer");
-const parser = require("../parsers/youtube.parser");
+const parser = require("../parsers/youtube/home.parser");
+const keywordParser = require("../parsers/youtube/keyword.parser");
 
-exports.extractData = async () => {
+exports.extractData = async (keyword) => {
   try {
+    let url = process.env.YOUTUBE_URL;
+
+    if (keyword != null) {
+      url += `/results?search_query=${keyword}`;
+    }
+
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
     await page.goto(process.env.YOUTUBE_URL, {
@@ -10,7 +17,10 @@ exports.extractData = async () => {
       timeout: 0,
     });
 
-    const contents = await parser.parse(page);
+    const contents = (keyword == null
+      ? await parser.parse(page)
+      : await keywordParser.parse(page)
+    );
 
     await browser.close();
     return Promise.resolve(contents);
