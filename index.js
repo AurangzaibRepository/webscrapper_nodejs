@@ -14,6 +14,7 @@ require("./app/routes/vimeo.route")(app);
 require("./app/routes/veoh.route")(app);
 require("./app/routes/dtube.route")(app);
 require("./app/routes/youtube.route")(app);
+require("./app/routes/dailymotion.route")(app);
 
 const PORT = process.env.port || 8000;
 app.listen(PORT, () => {
