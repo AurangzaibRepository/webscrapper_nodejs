@@ -31,17 +31,21 @@ exports.extractData = async (keyword) => {
 };
 
 exports.extractChannelData = async (channel) => {
-  const url = `${process.env.YOUTUBE_URL}/${channel}`;
+  try {
+    const url = `${process.env.YOUTUBE_URL}/${channel}`;
 
-  const browser = await puppeteer.launch();
-  const page = browser.newPage();
-  await page.goto(url, {
-    waitUntil: "networkidle0",
-    timeout: 0,
-  });
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(url, {
+      waitUntil: "networkidle0",
+      timeout: 0,
+    });
 
-  const contents = await channelParser.parse(page);
+    const contents = await channelParser.parse(page);
 
-  await browser.close();
-  return Promise.resolve(contents);
+    await browser.close();
+    return Promise.resolve(contents);
+  } catch (exception) {
+    return Promise.reject(exception.message);
+  }
 };
