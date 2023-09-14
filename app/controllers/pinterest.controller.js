@@ -2,7 +2,7 @@ const pinterestService = require("../services/pinterest.service");
 const requestHelper = require("../utils/request.helper");
 
 exports.get = (req, res) => {
-  pinterestService.extractData()
+  pinterestService.extractData(req.params.keyword)
     .then((response) => {
       res.send(requestHelper.getResponse(
         true,
