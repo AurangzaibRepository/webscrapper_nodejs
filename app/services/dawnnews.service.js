@@ -1,23 +1,18 @@
 const axios = require("axios");
 const parser = require("../parsers/dawnnews.parser");
 
-exports.extractData = (category) => {
-  let url = process.env.DAWNNEWS_URL;
+exports.extractData = async (category) => {
+  try {
+    let url = process.env.DAWNNEWS_URL;
 
-  if (category) {
-    url += `/${category}`;
+    if (category) {
+      url += `/${category}`;
+    }
+
+    const response = await axios(url);
+    const contents = parser.parse(response.data);
+    return contents;
+  } catch (error) {
+    return error.message;
   }
-
-  const promise = new Promise((resolve, reject) => {
-    axios(url)
-      .then((response) => {
-        const contents = parser.parse(response.data);
-        resolve(contents);
-      })
-      .catch((error) => {
-        reject(error.message);
-      });
-  });
-
-  return promise;
 };
