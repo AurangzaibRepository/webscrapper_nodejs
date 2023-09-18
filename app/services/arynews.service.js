@@ -11,17 +11,13 @@ exports.extractData = async () => {
   }
 };
 
-exports.extractCategoryData = (category) => {
-  const promise = new Promise((resolve, reject) => {
-    axios(`${process.env.ARYNEWS_URL}/category/${category}`)
-      .then((response) => {
-        const contents = parser.parseByCategory(response.data);
-        resolve(contents);
-      })
-      .catch((error) => {
-        reject(error.message);
-      });
-  });
-
-  return promise;
+exports.extractCategoryData = async (category) => {
+  try {
+    const url = `${process.env.ARYNEWS_URL}/category/${category}`;
+    const response = await axios(url);
+    const contents = parser.parseByCategory(response.data);
+    return contents;
+  } catch (error) {
+    return error.message;
+  }
 };
