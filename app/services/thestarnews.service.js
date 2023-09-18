@@ -4,19 +4,14 @@ const puppeteer = require("puppeteer");
 const parser = require("../parsers/thestarnews/home.parser");
 const categoryParser = require("../parsers/thestarnews/category.parser");
 
-exports.extractData = () => {
-  const promise = new Promise((resolve, reject) => {
-    axios(process.env.THESTARNEWS_URL)
-      .then((response) => {
-        const contents = parser.parse(response.data);
-        resolve(contents);
-      })
-      .catch((error) => {
-        reject(error.message);
-      });
-  });
-
-  return promise;
+exports.extractData = async () => {
+  try {
+    const response = await axios(process.env.THESTARNEWS_URL);
+    const contents = parser.parse(response.data);
+    return contents;
+  } catch (error) {
+    return error.message;
+  }
 };
 
 exports.extractCategoryData = async (category) => {
