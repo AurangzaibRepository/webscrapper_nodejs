@@ -23,9 +23,10 @@ exports.extractData = async (keyword) => {
 };
 
 exports.extractNews = async () => {
+  const url = `${process.env.PINTERESTNEWS_URL}/en/news`;
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.goto(process.env.PINTERESTNEWS_URL, {
+  await page.goto(url, {
     waitUntil: "networkidle0",
     timeout: 0,
   });
