@@ -2,7 +2,7 @@ const arynewsService = require("../services/arynews.service");
 const requestHelper = require("../utils/request.helper");
 
 exports.get = (req, res) => {
-  arynewsService.extractData(req.params.category)
+  arynewsService.extractData()
     .then((response) => {
       res.send(requestHelper.getResponse(
         true,
