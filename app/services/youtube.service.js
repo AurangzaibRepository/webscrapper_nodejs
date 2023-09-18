@@ -24,9 +24,9 @@ exports.extractData = async (keyword) => {
     );
 
     await browser.close();
-    return Promise.resolve(contents);
+    return contents;
   } catch (exception) {
-    return Promise.reject(exception.message);
+    return exception.message;
   }
 };
 
@@ -44,8 +44,8 @@ exports.extractChannelData = async (channel) => {
     const contents = await channelParser.parse(page);
 
     await browser.close();
-    return Promise.resolve(contents);
+    return contents;
   } catch (exception) {
-    return Promise.reject(exception.message);
+    return exception.message;
   }
 };
