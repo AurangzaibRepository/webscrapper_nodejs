@@ -2,8 +2,7 @@ const router = require("express").Router();
 const dawnnews = require("../controllers/dawnnews.controller");
 
 module.exports = (app) => {
-  router.get("/", dawnnews.get);
-  router.get("/:category", dawnnews.getByCategory);
+  router.get("/:category?", dawnnews.get);
 
   app.use("/api/dawnnews", router);
 };
