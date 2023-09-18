@@ -1,19 +1,14 @@
 const axios = require("axios");
 const parser = require("../parsers/thenews.parser");
 
-exports.extractData = () => {
-  const promise = new Promise((resolve, reject) => {
-    axios(process.env.THENEWS_URL)
-      .then((response) => {
-        const contents = parser.parse(response.data);
-        resolve(contents);
-      })
-      .catch((error) => {
-        reject(error.message);
-      });
-  });
-
-  return promise;
+exports.extractData = async () => {
+  try {
+    const response = await axios(process.env.THENEWS_URL);
+    const contents = parser.parse(response.data);
+    return contents;
+  } catch (error) {
+    return error.message;
+  }
 };
 
 exports.extractCategoryData = (category) => {
