@@ -14,8 +14,8 @@ exports.extractData = async (keyword) => {
     const contents = await parser.parse(page);
 
     await browser.close();
-    return Promise.resolve(contents);
+    return contents;
   } catch (error) {
-    return Promise.reject(error.message);
+    return error.message;
   }
 };
