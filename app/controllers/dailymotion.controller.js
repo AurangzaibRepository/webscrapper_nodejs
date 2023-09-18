@@ -1,19 +1,18 @@
 const dailymotionService = require("../services/dailymotion.service");
 const requestHelper = require("../utils/request.helper");
 
-exports.get = (req, res) => {
-  dailymotionService.extractData()
-    .then((response) => {
-      res.send(requestHelper.getResponse(
-        true,
-        null,
-        response,
-      ));
-    })
-    .catch((error) => {
-      res.send(requestHelper.getResponse(
-        false,
-        error,
-      ));
-    });
+exports.get = async (req, res) => {
+  try {
+    const response = await dailymotionService.extractData();
+    res.send(requestHelper.getResponse(
+      true,
+      null,
+      response,
+    ));
+  } catch (error) {
+    res.send(requestHelper.getResponse(
+      false,
+      error,
+    ));
+  }
 };
