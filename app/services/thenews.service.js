@@ -11,19 +11,14 @@ exports.extractData = async () => {
   }
 };
 
-exports.extractCategoryData = (category) => {
+exports.extractCategoryData = async (category) => {
   const url = `${process.env.THENEWS_URL}/latest/category/${category}`;
 
-  const promise = new Promise((resolve, reject) => {
-    axios(url)
-      .then((response) => {
-        const contents = parser.parseByCategory(response.data);
-        resolve(contents);
-      })
-      .catch((error) => {
-        reject(error.message);
-      });
-  });
-
-  return promise;
+  try {
+    const response = await axios(url);
+    const contents = parser.parseByCategory(response.data);
+    return contents;
+  } catch (error) {
+    return error.message;
+  }
 };
