@@ -17,19 +17,18 @@ exports.get = async (req, res) => {
   }
 };
 
-exports.getNews = (req, res) => {
-  pinterestService.extractNews()
-    .then((response) => {
-      res.send(requestHelper.getResponse(
-        true,
-        null,
-        response,
-      ));
-    })
-    .catch((error) => {
-      res.send(requestHelper.getResponse(
-        false,
-        error,
-      ));
-    });
+exports.getNews = async (req, res) => {
+  try {
+    const response = await pinterestService.extractNews();
+    res.send(requestHelper.getResponse(
+      true,
+      null,
+      response,
+    ));
+  } catch (error) {
+    res.send(requestHelper.getResponse(
+      false,
+      error,
+    ));
+  }
 };
