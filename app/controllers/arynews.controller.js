@@ -10,7 +10,7 @@ exports.get = async (req, res) => {
       response,
     ));
   } catch (error) {
-    res.send(requestHelper(
+    res.send(requestHelper.getResponse(
       false,
       error,
     ));
