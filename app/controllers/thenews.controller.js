@@ -17,19 +17,18 @@ exports.get = async (req, res) => {
   }
 };
 
-exports.getByCategory = (req, res) => {
-  thenewsService.extractCategoryData(req.params.category)
-    .then((response) => {
-      res.send(requestHelper.getResponse(
-        true,
-        null,
-        response,
-      ));
-    })
-    .catch((error) => {
-      res.send(requestHelper.getResponse(
-        false,
-        error,
-      ));
-    });
+exports.getByCategory = async (req, res) => {
+  try {
+    const response = await thenewsService.extractCategoryData(req.params.category);
+    res.send(requestHelper.getResponse(
+      true,
+      null,
+      response,
+    ));
+  } catch (error) {
+    res.send(requestHelper.getResponse(
+      false,
+      error,
+    ));
+  }
 };
