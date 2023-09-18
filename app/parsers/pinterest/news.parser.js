@@ -1,5 +1,5 @@
 exports.parse = async (page) => {
-  const { PINTEREST_URL } = process.env;
+  const { PINTERESTNEWS_URL } = process.env;
 
   const contents = await page.evaluate((baseUrl) => {
     const data = [];
@@ -17,7 +17,7 @@ exports.parse = async (page) => {
     });
 
     return data;
-  }, PINTEREST_URL);
+  }, PINTERESTNEWS_URL);
 
   return contents;
 };
