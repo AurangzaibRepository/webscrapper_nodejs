@@ -17,19 +17,18 @@ exports.get = async (req, res) => {
   }
 };
 
-exports.getByCategory = (req, res) => {
-  arynewsService.extractCategoryData(req.params.category)
-    .then((response) => {
-      res.send(requestHelper.getResponse(
-        true,
-        null,
-        response,
-      ));
-    })
-    .catch((error) => {
-      res.send(requestHelper.getResponse(
-        true,
-        error,
-      ));
-    });
+exports.getByCategory = async (req, res) => {
+  try {
+    const response = await arynewsService.extractCategoryData(req.params.category);
+    res.send(requestHelper.getResponse(
+      true,
+      null,
+      response,
+    ));
+  } catch (error) {
+    res.send(requestHelper.getResponse(
+      false,
+      error,
+    ));
+  }
 };
