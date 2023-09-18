@@ -12,5 +12,5 @@ exports.extractData = async () => {
   const contents = await parser.parse(page);
 
   await browser.close();
-  return Promise.resolve(contents);
+  return contents;
 };
