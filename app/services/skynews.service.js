@@ -1,19 +1,14 @@
 const axios = require("axios");
 const parser = require("../parsers/skynews.parser");
 
-exports.extractData = (category) => {
+exports.extractData = async (category) => {
   const url = `${process.env.SKYNEWS_URL}/${(category || "")}`;
 
-  const response = new Promise((resolve, reject) => {
-    axios(url)
-      .then((data) => {
-        const contents = parser.parse(data.data);
-        resolve(contents);
-      })
-      .catch((error) => {
-        reject(error.message);
-      });
-  });
-
-  return response;
+  try {
+    const response = await axios(url);
+    const contents = parser.parse(response.data);
+    return contents;
+  } catch (error) {
+    return error.message;
+  }
 };
