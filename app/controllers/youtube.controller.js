@@ -17,19 +17,18 @@ exports.get = async (req, res) => {
   }
 };
 
-exports.getByChannel = (req, res) => {
-  youtubeService.extractChannelData(req.params.channel)
-    .then((response) => {
-      res.send(requestHelper.getResponse(
-        true,
-        null,
-        response,
-      ));
-    })
-    .catch((error) => {
-      res.send(requestHelper.getResponse(
-        false,
-        error,
-      ));
-    });
+exports.getByChannel = async (req, res) => {
+  try {
+    const response = await youtubeService.extractChannelData(req.params.channel);
+    res.send(requestHelper.getResponse(
+      true,
+      null,
+      response,
+    ));
+  } catch (error) {
+    res.send(requestHelper.getResponse(
+      false,
+      error,
+    ));
+  }
 };
