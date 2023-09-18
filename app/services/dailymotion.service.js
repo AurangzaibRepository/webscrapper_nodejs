@@ -1,16 +1,10 @@
-const puppeteer = require("puppeteer");
+const puppeteer = require("../utils/puppeteer.helper");
 const parser = require("../parsers/dailymotion.parser");
 
 exports.extractData = async () => {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.goto(process.env.DAILYMOTION_URL, {
-    waitUntil: "networkidle0",
-    timeout: 0,
-  });
-
-  const contents = await parser.parse(page);
-
-  await browser.close();
-  return contents;
+  try {
+    return await puppeteer.initialize(process.env.DAILYMOTION_URL, parser.parse);
+  } catch (error) {
+    return error.message;
+  }
 };
