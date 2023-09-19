@@ -3,7 +3,7 @@ const requestHelper = require("../utils/request.helper");
 
 exports.get = async (req, res) => {
   try {
-    const response = await pinterestService.extractData();
+    const response = await pinterestService.extractData(req.params.keyword);
     res.send(requestHelper.getResponse(
       true,
       null,
