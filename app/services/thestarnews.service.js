@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const axios = require("axios");
-const puppeteer = require("puppeteer");
+const puppeteer = require("../utils/puppeteer.helper");
 const parser = require("../parsers/thestarnews/home.parser");
 const categoryParser = require("../parsers/thestarnews/category.parser");
 
@@ -16,15 +16,9 @@ exports.extractData = async () => {
 
 exports.extractCategoryData = async (category) => {
   try {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    await page.goto(`${process.env.THESTARNEWS_URL}/${category}`, {
-      waitUntil: "domcontentloaded",
-    });
+    const url = `${process.env.THESTARNEWS_URL}/${category}`;
 
-    const contents = await categoryParser.parse(page);
-    await browser.close();
-    return contents;
+    return puppeteer.initialize("domcontentloaded", url, categoryParser.parse);
   } catch (error) {
     return error.message;
   }
