@@ -13,16 +13,11 @@ exports.extractData = async (keyword) => {
 };
 
 exports.extractNews = async () => {
-  const url = `${process.env.PINTERESTNEWS_URL}/en/news`;
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.goto(url, {
-    waitUntil: "networkidle0",
-    timeout: 0,
-  });
+  try {
+    const url = `${process.env.PINTERESTNEWS_URL}/en/news`;
 
-  const contents = await newsParser.parse(page);
-
-  await browser.close();
-  return Promise.resolve(contents);
+    return await puppeteer.initialize("networkidle0", url, newsParser.parse);
+  } catch (error) {
+    return error.message;
+  }
 };
