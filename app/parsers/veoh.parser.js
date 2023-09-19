@@ -1,5 +1,7 @@
 exports.parse = async (page) => {
-  const contents = await page.evaluate(() => {
+  const { VEOH_URL } = process.env;
+
+  const contents = await page.evaluate((baseUrl) => {
     const data = [];
     const videoContainers = document.querySelectorAll(".video_area");
 
@@ -9,14 +11,14 @@ exports.parse = async (page) => {
       items.forEach((item) => {
         data.push({
           title: item.querySelector(".title").innerText,
-          url: item.querySelector("a").getAttribute("href"),
+          url: `${baseUrl}${item.querySelector("a").getAttribute("href")}`,
           image: item.querySelector("img").getAttribute("src"),
         });
       });
     });
 
     return data;
-  });
+  }, VEOH_URL);
 
   return contents;
 };
