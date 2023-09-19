@@ -1,4 +1,4 @@
-const puppeteer = require("puppeteer");
+const puppeteer = require("../utils/puppeteer.helper");
 const parser = require("../parsers/pinterest/home.parser");
 const newsParser = require("../parsers/pinterest/news.parser");
 
@@ -6,19 +6,9 @@ exports.extractData = async (keyword) => {
   try {
     const url = `${process.env.PINTEREST_URL}/search/pins/?q=${keyword}`;
 
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    await page.goto(url, {
-      waitUntil: "networkidle0",
-      timeout: 0,
-    });
-
-    const contents = await parser.parse(page);
-
-    await browser.close();
-    return Promise.resolve(contents);
+    return await puppeteer.initialize("networkidle0", url, parser.parse);
   } catch (exception) {
-    return Promise.reject(exception.message);
+    return exception.message;
   }
 };
 
